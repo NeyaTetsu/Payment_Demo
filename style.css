@@ -1,87 +1,177 @@
-body {
-    background: whitesmoke;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 'sans-serif';
-    width: 100%;
-    font-size: 24px;
-    line-height: .5;
-    color: black;
-    margin: 0;
-    text-indent: 0;
-    height: 170%;
-}
 html{
     height: 100%;
 }
-.title{
+
+
+body {
+    color: black;
+    background: #eee;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 'sans-serif';
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    text-indent: 0;
+}
+
+.display_none{
+    display: none !important;
+}
+
+
+p, label{
+    font-size: 24px;
+    margin: 0;
+    padding: 6px 0;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+}
+
+div.header{
     display: flex;
-    height: 70px;
+    align-items: center;
+    height: 64px;
     background-color: #3E50B4;
+    padding: 0 24px;
 }
-.action_box img{
-    display: none; /*今はアクションボタンを使わないので非表示化*/
-    height:50px;
-    margin:10px;
-}
-.title_text{
-    font-size: 35px;
-    line-height: 0;
-    margin-top:auto;
-    margin-bottom: auto;
+div.header > p{
+    font-size: 36px;
     color: white;
 }
-.main_text{
+
+div.footer{
+    position: sticky;
+    top: 100vh;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 36px;
+    background-color: #3E50B4;
+    padding: 0 24px;
+    margin-top: 24px;
+}
+div.footer > p{
+    font-size: 18px;
+    color: white;
+}
+
+
+a{
+    color: #3E50B4;
+    cursor: pointer;
+}
+
+div.main{
+    max-width: 480px;
+    min-height: calc(100% - 142px);
+    margin: 0 auto;
+}
+
+div.text_box_side{
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    margin: 24px;
+}
+
+p.main_text{
     text-align: center;
 }
-.pay_text{
-    font-size: 32px;
+
+
+div.setting{
+    margin: 24px;
 }
-.select{
+div.setting div.checkbox{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+div.setting input[type="checkbox"]{
+    appearance: none;
+    cursor: pointer;
+    display: block;
+    margin: 0;
+    width: 42px;
+    height: 24px;
+    border-radius: 24px;
+    background-color: #444;
+    transition: background-color .3s ease;
+    &::before{
+        content: "";
+        display: block;
+        height: 20px;
+        width: 20px;
+        margin: 2px;
+        border-radius: 10px;
+        background: white;
+        transition: margin .3s ease;
+    }
+    &:checked{
+        background-color: #3E50B4;
+        &::before{
+            margin-left: 20px;
+        }
+    }
+}
+div.setting label{
+    display: block;
+}
+
+
+div.button, a.button{
     background-color: white;
-    width: 95%;
-    height: 100px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    box-shadow:
-    0 1.9px 2.5px rgba(0, 0, 0, 0.057),
-    0 5px 6.1px rgba(0, 0, 0, 0.076),
-    0 10.1px 11.4px rgba(0, 0, 0, 0.086),
-    0 19.2px 19.8px rgba(0, 0, 0, 0.092),
-    0 38.4px 34.8px rgba(0, 0, 0, 0.1),
-    0 101px 74px rgba(0, 0, 0, 0.13);
+    border-radius: 16px;
+    margin: 16px 24px;
+}
+a.button{
+    text-decoration: none;
+    color: black;
+}
+
+div.select, a.select{
+    cursor: pointer;
+    height: 96px;
     position:relative;
     display: flex;
-    font-size: 40px;
+    align-items: center;
+    box-sizing: border-box;
 }
-.select img{
-    width: 100px;
-    margin-left: 10px;
+div.select > img, a.select > img{
+    aspect-ratio: 1;
+    width: 96px;
+    height: auto;
+    padding: 12px;
+    box-sizing: border-box;
 }
-.select a{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height: 100%;
+div.select > p, a.select > p{
+    font-size: 36px;
 }
-.pay{
+
+
+div.status_display{
+    margin: 16px 24px;
+    padding: 8px;
+    background: #ddd;
+    border-radius: 8px;
+}
+p.status_display_text{
+    font-size: 36px;
+    padding: 12px 0;
+}
+div.payment_method{
+    display: flex;
+    justify-content: space-between;
+}
+p.payment_amount{
+    text-align: right;
+}
+
+
+div.pay{
+    touch-action: none;
+    user-select: none;
     background-color: white;
-    width: 90%;
-    height: 40vh;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    box-shadow:
-    0 1.9px 2.5px rgba(0, 0, 0, 0.057),
-    0 5px 6.1px rgba(0, 0, 0, 0.076),
-    0 10.1px 11.4px rgba(0, 0, 0, 0.086),
-    0 19.2px 19.8px rgba(0, 0, 0, 0.092),
-    0 38.4px 34.8px rgba(0, 0, 0, 0.1),
-    0 101px 74px rgba(0, 0, 0, 0.13);
-    position:relative;
+    aspect-ratio: 8/5;
     display: flex;
     font-size: 40px;
     vertical-align: middle;
@@ -89,6 +179,35 @@ html{
     align-items: center;
     justify-content: center;
 }
-.pay img{
+div.pay > img{
+    user-select: none;
+    -webkit-user-drag: none;
     height: 50%;
+}
+div.pay.stby{
+    cursor: pointer;
+    box-shadow: skyblue 0 0 16px;
+}
+div.pay.done#pay_credit{
+    box-shadow: greenyellow 0 0 16px;
+}
+div.pay.done#pay_FeliCa{
+    box-shadow: skyblue 0 0 16px;
+}
+div.pay.error{
+    box-shadow: red 0 0 16px;
+}
+
+
+div.back_button{
+    cursor: pointer;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 100vh;
+    margin-bottom: -12px;
 }

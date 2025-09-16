@@ -1,28 +1,36 @@
-<!DOCTYPE html>
 <head>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#3E50B4">
-</head>
-<header>
     <title>Payment Demo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
-    <meta name="description" content="シンプルな数を数えるカウンター">
+    <meta name="description" content="非接触決済 疑似体験サイト">
     <link rel="stylesheet" href="style.css">
-</header>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3E50B4">
+</head>
 <body>
-    <div class="title">
-        <div class="action_box">
-            <a href=""><img src="images/action.png" alt="アクションボタン"></a>
-        </div>
-        <div class="title_text">
-            <p>ペイメントデモ</p>
-        </div>
+    <div class="header">
+        <p>ペイメントデモ</p>
     </div>
     <div class="main">
-        <p class="main_text">お知らせ</p>
-        <div class="select"><img src="/Payment_Demo/images/salmon.png" style="margin: 10px; width: auto;"><p>しゃけが作った！</p><a href="https://twitter.com/arimagawa_m"></a></div>
-        <div class="select"><img src="/Payment_Demo/images/salmon.png" style="margin: 10px; width: auto;"><p>エラー音を追加！</p><a href=""></a></div>
+        <div class="text_box_side">
+            <p class="main_text">お知らせ</p>
+        </div>
+        <a href="https://twitter.com/arimagawa_m" target="_blank" class="button select">
+            <img src="./images/salmon.png" alt="しゃけ">
+            <p>しゃけが作った！</p>
+        </a>
+        <div class="button select" style="cursor: auto;">
+            <img src="./images/salmon.png" alt="しゃけ">
+            <p>エラー音を追加！</p>
+            <a href=""></a>
+        </div>
+        <a href="https://twitter.com/NeyaTetsu" target="_blank" class="button select">
+            <img src="./images/neya-logo.png" alt="ねや">
+            <p>ねやが改造！</p>
+        </a>
+    </div>
+    <div class="footer">
+        <p>&copy;しゃけ&amp;ねや 2024-2025</p>
     </div>
     <script src="script.js"></script>
 </body>

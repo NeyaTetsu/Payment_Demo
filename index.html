@@ -1,35 +1,83 @@
 <!DOCTYPE html>
 <head>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#3E50B4">
-</head>
-<header>
     <title>Payment Demo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
-    <meta name="description" content="シンプルな数を数えるカウンター">
+    <meta name="description" content="非接触決済 疑似体験サイト">
     <link rel="stylesheet" href="style.css">
-</header>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3E50B4">
+</head>
 <body>
-    <div class="title">
-        <div class="action_box">
-            <a href=""><img src="images/action.png" alt="アクションボタン"></a>
+    <div class="header">
+        <p>ペイメントデモ</p>
+    </div>
+    <div class="main" id="select_window">
+        <div class="text_box_side">
+            <p class="main_text">決済方法を選択</p>
+            <p class="main_text"><a href="./info.html">お知らせ</a></p>
         </div>
-        <div class="title_text">
-            <p>ペイメントデモ</p>
+        <div class="setting">
+            <div class="checkbox">
+                <input type="checkbox" name="errormode" id="errormode">
+                <label for="errormode">ランダムでエラーを発生させる</label>
+            </div>
+        </div>
+        <div class="button select" id="select_credit">
+            <img src="./images/contactless.png" alt="Credit Card Contactless">
+            <p>クレジット</p>
+        </div>
+        <div class="button select" id="select_iD">
+            <img src="./images/iD.png" alt="iD">
+            <p>iD</p>
+        </div>
+        <div class="button select" id="select_QUICPay">
+            <img src="./images/QUICPay.png" alt="QUICPay+">
+            <p>QUICPay</p>
+        </div>
+        <div class="button select" id="select_TransportationIC">
+            <img src="./images/TransportationIC.jpg" alt="Transportation IC">
+            <p>交通系IC</p>
+        </div>
+        <div class="button select" id="select_WAON">
+            <img src="./images/waon.png" alt="WAON">
+            <p>WAON</p>
+        </div>
+        <div class="button select" id="select_Edy">
+            <img src="./images/edy.png" alt="Rakuten Edy">
+            <p>楽天Edy</p>
+        </div>
+        <div class="button select" id="select_nanaco">
+            <img src="./images/nanaco.png" alt="nanaco">
+            <p>nanaco</p>
+        </div>
+        <div class="button select" id="select_PiTaPa">
+            <img src="./images/pitapa.png" alt="PiTaPa">
+            <p>PiTaPa</p>
+        </div>
+        <div class="button select" id="select_Paseli">
+            <img src="./images/paseli logo.png" alt="Paseli">
+            <p>Paseli</p>
         </div>
     </div>
-    <div class="main">
-        <p class="main_text">決済方法を選択　　<a href="/Payment_Demo/info.html">お知らせ</a></p>
-        <div class="select"><img src="/Payment_Demo/images/contactless.png"><p>クレジット決済</p><a href="/Payment_Demo/Credit.html"></a></div>
-        <div class="select"><img src="/Payment_Demo/images/iD.png"><p>iD</p><a href="/Payment_Demo/iD.html"></a></div>
-        <div class="select"><img src="/Payment_Demo/images/QUICPay.png"><p>QUICPay</p><a href="/Payment_Demo/QUICPay.html"></a></div>
-        <div class="select"><img src="/Payment_Demo/images/TransportationIC.jpg"><p>交通系IC</p><a href="/Payment_Demo/transportation_ic.html"></a></div>
-        <div class="select"><img src="/Payment_Demo/images/waon.png"><p>WAON</p><a href="/Payment_Demo/waon.html"></a></div>
-        <div class="select"><img src="/Payment_Demo/images/edy.png"><p>楽天Edy</p><a href="/Payment_Demo/edy.html"></a></div>
-        <div class="select"><img src="/Payment_Demo/images/nanaco.png"><p>nanaco</p><a href="/Payment_Demo/nanaco.html"></a></div>
-        <div class="select"><img src="/Payment_Demo/images/pitapa.png"><p>PiTaPa</p><a href="/Payment_Demo/pitapa.html"></a></div>
-        <div class="select"><img src="/Payment_Demo/images/paseli logo.png"><p>Paseli</p><a href="/Payment_Demo/paseri.html"></a></div>
+    <div class="main" id="payment_window">
+        <div class="status_display">
+            <div class="payment_method">
+                <p class="status_display_text" id="payment_method_type">売上</p>
+                <p class="status_display_text" id="payment_method_name">クレジット</p>
+            </div>
+            <p class="status_display_text payment_amount">&yen;<span id="payment_amount">3,900</span></p>
+            <p class="status_display_text" id="payment_status0">ありがとう</p>
+            <p class="status_display_text" id="payment_status1">ございました</p>
+        </div>
+        <div class="button pay" id="pay_credit" oncontextmenu="return false;"><img src="./images/contactless_pay.png" alt="Tap here"></div>
+        <div class="button pay" id="pay_FeliCa" oncontextmenu="return false;"><img src="./images/mobile_ic_logo.png" alt="Tap here"></div>
+        <audio id="audio"></audio>
+        <div class="button back_button" id="payment_back_button"><p class="back_button">戻る</p></div>
     </div>
+    <div class="footer">
+        <p>&copy;しゃけ&amp;ねや 2024-2025</p>
+    </div>
+    <script src="payment.js"></script>
     <script src="script.js"></script>
 </body>
