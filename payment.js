@@ -1,4 +1,7 @@
 (function (){
+    //古いブラウザ用
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
     //決済方法選択画面
     const select_window = document.getElementById("select_window");
     //決済画面
@@ -46,6 +49,8 @@
     let paymentLimit;
     let doneSoundFile;
     let errorSoundFile;
+    let doneSoundType;
+    let errorSoundType;
     let errorMesseage;
     let errorFastResponce;
     let processingTime;
@@ -55,7 +60,7 @@
         serviceName = "iD";
         paymentLimit = 30000;
         doneSoundFile = "./sound/id.mp3";
-        doneSouudType = "audio/mp3";
+        doneSoundType = "audio/mp3";
         errorSoundFile = ["./sound/iD Error.wav", "./sound/Again 1.wav"];
         errorSoundType = ["audio/wav", "audio/wav"];
         errorMesseage = [["　", "お取り扱いできません"], ["もう一度", "タッチしてください"]];
@@ -70,7 +75,7 @@
         serviceName = "QUICPay";
         paymentLimit = 30000;
         doneSoundFile = "./sound/quicpay.mp3";
-        doneSouudType = "audio/mp3";
+        doneSoundType = "audio/mp3";
         errorSoundFile = ["./sound/QUICPay Error.wav", "./sound/Again 1.wav"];
         errorSoundType = ["audio/wav", "audio/wav"];
         errorMesseage = [["　", "お取り扱いできません"], ["もう一度", "タッチしてください"]];
@@ -85,7 +90,7 @@
         serviceName = "交通系";
         paymentLimit = 20000;
         doneSoundFile = "./sound/transportationic.mp3";
-        doneSouudType = "audio/mp3";
+        doneSoundType = "audio/mp3";
         errorSoundFile = ["./sound/Error.wav", "./sound/Error.wav"];
         errorSoundType = ["audio/wav", "audio/wav"];
         errorMesseage = [["　", "残額不足"], ["　", "お取り扱いできません"]];
@@ -100,7 +105,7 @@
         serviceName = "WAON";
         paymentLimit = 50000;
         doneSoundFile = "./sound/waon.mp3";
-        doneSouudType = "audio/mp3";
+        doneSoundType = "audio/mp3";
         errorSoundFile = ["./sound/WAON Error.wav", "./sound/Error.wav"];
         errorSoundType = ["audio/wav", "audio/wav"];
         errorMesseage = [["　", "残額不足"], ["　", "お取り扱いできません"]];
@@ -115,7 +120,7 @@
         serviceName = "楽天Edy";
         paymentLimit = 50000;
         doneSoundFile = "./sound/edy.mp3";
-        doneSouudType = "audio/mp3";
+        doneSoundType = "audio/mp3";
         errorSoundFile = ["./sound/Edy Error.wav", "./sound/Error.wav"];
         errorSoundType = ["audio/wav", "audio/wav"];
         errorMesseage = [["　", "残額不足"], ["　", "お取り扱いできません"]];
@@ -130,7 +135,7 @@
         serviceName = "nanaco";
         paymentLimit = 50000;
         doneSoundFile = "./sound/nanaco.mp3";
-        doneSouudType = "audio/mp3";
+        doneSoundType = "audio/mp3";
         errorSoundFile = ["./sound/Error.wav", "./sound/Error.wav"];
         errorSoundType = ["audio/wav", "audio/wav"];
         errorMesseage = [["　", "残額不足"], ["　", "お取り扱いできません"]];
@@ -145,7 +150,7 @@
         serviceName = "PiTaPa";
         paymentLimit = 30000;
         doneSoundFile = "./sound/pitapa.mp3";
-        doneSouudType = "audio/mp3";
+        doneSoundType = "audio/mp3";
         errorSoundFile = ["./sound/pitapa_error.wav"];
         errorSoundType = ["audio/wav"];
         errorMesseage = [["　", "お取り扱いできません"]];
@@ -160,7 +165,7 @@
         serviceName = "Paseli";
         paymentLimit = 20000;
         doneSoundFile = "./sound/paseli.mp3";
-        doneSouudType = "audio/mp3";
+        doneSoundType = "audio/mp3";
         errorSoundFile = ["./sound/Error.wav", "./sound/Error.wav"];
         errorSoundType = ["audio/wav", "audio/wav"];
         errorMesseage = [["　", "残額不足"], ["　", "お取り扱いできません"]];
@@ -212,8 +217,8 @@
         payment_processing = true;
 
         const error = randomErrorEvent();
+        playCreditSound(!error);
         if(error){
-            playCreditSound(false);
             setStatusDisplay(["１枚だけ", "かざしてください"]);
             payButtonError(pay_credit);
             doneCreditPayment();
@@ -223,7 +228,6 @@
         let cardTap = true;
         let paymentCommunicating = true;
         let timeOut = false;
-        playCreditSound(true);
         setStatusDisplay(["受け付けました", "ｶｰﾄﾞをお取りください"]);
         payButtonDone(pay_credit);
         //3秒待つ
@@ -289,21 +293,14 @@
         let lastStatus = ["　", "取引が完了しました"];
         const error = randomErrorEvent();
         if(error){
-            if(Array.isArray(errorSoundFile)){
-                let i = Math.floor(Math.random() * errorSoundFile.length);
-                audio.src = errorSoundFile[i];
-                audio.type = errorSoundType[i];
-                respoce = errorFastResponce[i];
-                lastStatus = errorMesseage[i];
-            }else{
-                audio.src = errorSoundFile;
-                audio.type = errorSoundType;
-                respoce = errorFastResponce;
-                lastStatus = errorMesseage;
-            }
+            let i = Math.floor(Math.random() * errorSoundFile.length);
+            audio.src = errorSoundFile[i];
+            audio.type = errorSoundType[i];
+            respoce = errorFastResponce[i];
+            lastStatus = errorMesseage[i];
         }else{
             audio.src = doneSoundFile;
-            audio.type = doneSouudType;
+            audio.type = doneSoundType;
         }
         setStatusDisplay(["　", "処理中です"]);
         payButtonDone(pay_Felica);
@@ -369,67 +366,57 @@
         payment_processing = false;
         init();
     });
+    
+    
+    //ランダム金額
+    function randomAmount(maxValue){
+        let x = Math.floor(Math.random() * (maxValue + 1));
+        return x;
+    }
+    //ランダムエラーイベント
+    function randomErrorEvent(){
+        //エラー発生をオンにしているかチェック
+        let errormode = document.getElementById("errormode").checked;
+        //発生確率（30%）
+        const rate = .3;
+        if(errormode && Math.random() < rate){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    //クレジット決済音を生成
+    function playCreditSound(done){
+        let ctx, osc, amp = null;
+        //trueなら成功音、falseならエラー音を生成
+        let gain = 1;
+        let freq;
+        if(done){
+            freq = 1500;
+        }else{
+            freq = 750;
+        }
+        ctx = new AudioContext();
+        osc = ctx.createOscillator();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        amp = ctx.createGain();
+        amp.gain.value = gain;
+        osc.connect(amp).connect(ctx.destination);
+        //再生
+        if(done){
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + .5);
+        }else{
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + .6);
+            amp.gain.setValueAtTime(0, ctx.currentTime + .2);
+            amp.gain.setValueAtTime(gain, ctx.currentTime + .4);
+        }
+        return false;
+    }
 }());
 
 
-//ランダム金額
-function randomAmount(maxValue){
-    let x = Math.floor(Math.random() * (maxValue + 1));
-    return x;
-}
-//ランダムエラーイベント
-function randomErrorEvent(){
-    //エラー発生をオンにしているかチェック
-    let errormode = document.getElementById("errormode").checked;
-    //発生確率（30%）
-    const rate = .3;
-    if(errormode && Math.random() < rate){
-        return true;
-    }else{
-        return false;
-    }
-}
-//その他ランダムイベント
-function randomEvent(rate){
-    if(Math.random() < rate){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-
-//待機時間
-function sleep(ms){
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
-//クレジット決済音を生成
-function playCreditSound(done){
-    //trueなら成功音、falseならエラー音を生成
-    let gain = 1;
-    let freq;
-    if(done){
-        freq = 1500;
-    }else{
-        freq = 750;
-    }
-    const ctx = new AudioContext();
-    const osc = new OscillatorNode(ctx);
-    osc.type = "sine";
-    osc.frequency.value = freq;
-    const amp = new GainNode(ctx);
-    amp.gain.value = gain;
-    osc.connect(amp).connect(ctx.destination);
-    //再生
-    if(done){
-        osc.start(0);
-        osc.stop(.5);
-    }else{
-        osc.start(0);
-        osc.stop(.6);
-        amp.gain.setValueAtTime(0, ctx.currentTime + .2);
-        amp.gain.setValueAtTime(gain, ctx.currentTime + .4);
-    }
-}
